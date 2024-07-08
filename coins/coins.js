@@ -20,15 +20,26 @@ const coinId = urlParams.get('id');
 
 const fetchCoinsData = async (coinId)=>{
     try {
+        showShimmer()
         const response = await fetch(`${url}${coinId}`, options);
         const coinsData = await response.json();
         displayCoinsData(coinsData)
+        hideShimmer()
     } catch (error) {
         console.log(error,'error while fetching coins')
     }
 }
 
+// loader
+const showShimmer=()=>{
+    shimmerContainer.style.display="flex"
+};
+const hideShimmer =()=>{
+    shimmerContainer.style.display="none"
+}
+
 const displayCoinsData = (coinsData)=>{
+   
     coinImage.src = coinsData.image.large;
     coinImage.alt= coinsData.name;
     coinDescription.textContent = coinsData.description.en.split(".")[0];
@@ -36,6 +47,7 @@ const displayCoinsData = (coinsData)=>{
     coinName.textContent=coinsData.name;
     coinPrice.textContent= `$${coinsData.market_data.current_price.usd.toLocaleString()}`;
     coinMarketCap.textContent=`$${coinsData.market_data.market_cap.usd.toLocaleString()}`;
+ 
 }
 
 
