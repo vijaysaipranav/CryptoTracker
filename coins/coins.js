@@ -1,5 +1,6 @@
+
 const coinContainer = document.getElementById("coin-container");
-const shimmerContainer = document.querySelector(".shimmer-container");
+const shimmerContainer = document.querySelector("#shimmer-container");
 const coinImage = document.getElementById("coin-image");
 const coinName = document.getElementById("coin-name");
 const coinDescription= document.getElementById("coin-description"); 
@@ -20,11 +21,11 @@ const coinId = urlParams.get('id');
 
 const fetchCoinsData = async (coinId)=>{
     try {
-        showShimmer()
+       
         const response = await fetch(`${url}${coinId}`, options);
         const coinsData = await response.json();
         displayCoinsData(coinsData)
-        hideShimmer()
+       
     } catch (error) {
         console.log(error,'error while fetching coins')
     }
@@ -33,9 +34,11 @@ const fetchCoinsData = async (coinId)=>{
 // loader
 const showShimmer=()=>{
     shimmerContainer.style.display="flex"
+    coinContainer.style.display="none"
 };
 const hideShimmer =()=>{
     shimmerContainer.style.display="none"
+    coinContainer.style.display=""
 }
 
 const displayCoinsData = (coinsData)=>{
@@ -62,5 +65,7 @@ const displayCoinsData = (coinsData)=>{
 //     }
 // })
 document.addEventListener('DOMContentLoaded',async()=>{
+    showShimmer()
     await fetchCoinsData(coinId);
+    hideShimmer()
 })
