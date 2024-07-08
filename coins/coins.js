@@ -54,16 +54,38 @@ const displayCoinsData = (coinsData)=>{
 }
 
 
-// const coinChart = new CharacterData(ctx,{
-//     type:"line",
-//     data:{
-//         label:[],
-//         datasets:[
+const coinChart = new Chart(ctx,{
+    type:"line",
+    data:{
+        label:[],
+        datasets:[
+            {
+                label:"Price (USD)",
+                data:[],
+                borderWidth:1,
+                borderColor:"#eebc1d",
+            }
+            
 
-//         ]
+        ]
 
-//     }
-// })
+    },
+});
+
+// fetch the chart data from api
+const fetchChartData =async (days)=>{
+    try {
+        const response = await fetch(`${url}${coinId}/market_chart?vs_currency=usd&days=${days}`,options);
+        const chartData = response.json();
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Display the chart data
+
+
 document.addEventListener('DOMContentLoaded',async()=>{
     showShimmer()
     await fetchCoinsData(coinId);
